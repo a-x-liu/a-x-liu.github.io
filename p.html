@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- Bootstrap CSS -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="./style.css">
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+		<title>Weekly Timetabling Application</title>
+	</head>
+	<body>
+		
+		<!-- <nav class="zone grey">
+			<ul class="main-nav">
+				<h4>
+				<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-calendar4" viewBox="0 0 16 16">
+					<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z"/>
+				</svg>  Weekly Timetabling Application
+			
+				<svg class="push" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+					<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+				</svg>
+				</h4>
+
+			</ul>
+		</nav> -->
+		<nav class="navbar navbar-dark" style="background-color: #340064; min-height: 60px; min-height: 70px;">
+			<a class="navbar-brand" href="#">
+				<div class="d-inline-block align-top" style="min-width: 20px;"></div>
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30"  class="d-inline-block align-top" style="fill: white; vertical-align: middle;">
+					<path d="M7.75 11c-.69 0-1.25.56-1.25 1.25v1.5a1.25 1.25 0 102.5 0v-1.5C9 11.56 8.44 11 7.75 11zm1.27 4.5a.469.469 0 01.48-.5h5a.47.47 0 01.48.5c-.116 1.316-.759 2.5-2.98 2.5s-2.864-1.184-2.98-2.5zm7.23-4.5c-.69 0-1.25.56-1.25 1.25v1.5a1.25 1.25 0 102.5 0v-1.5c0-.69-.56-1.25-1.25-1.25z"></path><path fill-rule="evenodd" d="M21.255 3.82a1.725 1.725 0 00-2.141-1.195c-.557.16-1.406.44-2.264.866-.78.386-1.647.93-2.293 1.677A18.442 18.442 0 0012 5c-.93 0-1.784.059-2.569.17-.645-.74-1.505-1.28-2.28-1.664a13.876 13.876 0 00-2.265-.866 1.725 1.725 0 00-2.141 1.196 23.645 23.645 0 00-.69 3.292c-.125.97-.191 2.07-.066 3.112C1.254 11.882 1 13.734 1 15.527 1 19.915 3.13 23 12 23c8.87 0 11-3.053 11-7.473 0-1.794-.255-3.647-.99-5.29.127-1.046.06-2.15-.066-3.125a23.652 23.652 0 00-.689-3.292zM20.5 14c.5 3.5-1.5 6.5-8.5 6.5s-9-3-8.5-6.5c.583-4 3-6 8.5-6s7.928 2 8.5 6z"></path>
+				</svg>
+				Weekly Timetabling Application
+			</a>
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+				<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412l-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+			</svg>
+		</nav>
+
+		<!-- modal for the times -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Change start and end times</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<select id="start" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+						<option selected>Select start time</option>
+						<option value="1">1am</option>
+						<option value="2">2am</option>
+						<option value="3">3am</option>
+						<option value="4">4am</option>
+						<option value="5">5am</option>
+						<option value="6">6am</option>
+						<option value="7">7am</option>
+						<option value="8">8am</option>
+						<option value="9">9am</option>
+						<option value="10">10am</option>
+						<option value="11">11am</option>
+						<option value="12">Noon</option>
+						<option value="13">1pm</option>
+						<option value="14">2pm</option>
+						<option value="15">3pm</option>
+						<option value="16">4pm</option>
+						<option value="17">5pm</option>
+						<option value="18">6pm</option>
+						<option value="19">7pm</option>
+						<option value="20">8pm</option>
+						<option value="21">9pm</option>
+						<option value="22">10pm</option>
+						<option value="23">11pm</option>
+						<option value="24">Midnight</option>
+					</select>
+					<select id="end" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+						<option selected>Select start time</option>
+						<option value="1">1am</option>
+						<option value="2">2am</option>
+						<option value="3">3am</option>
+						<option value="4">4am</option>
+						<option value="5">5am</option>
+						<option value="6">6am</option>
+						<option value="7">7am</option>
+						<option value="8">8am</option>
+						<option value="9">9am</option>
+						<option value="10">10am</option>
+						<option value="11">11am</option>
+						<option value="12">Noon</option>
+						<option value="13">1pm</option>
+						<option value="14">2pm</option>
+						<option value="15">3pm</option>
+						<option value="16">4pm</option>
+						<option value="17">5pm</option>
+						<option value="18">6pm</option>
+						<option value="19">7pm</option>
+						<option value="20">8pm</option>
+						<option value="21">9pm</option>
+						<option value="22">10pm</option>
+						<option value="23">11pm</option>
+						<option value="24">Midnight</option>
+					</select>
+					Please note that start time must be earlier than end time
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button id="dick" type="button" class="btn btn-primary" data-bs-dismiss="modal">Confirm</button>
+				</div>
+				</div>
+			</div>
+		</div>
+		<!--  -->
+
+		<!-- modal for creating events -->
+		<div class="modal fade" id="timeModal" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Create a new event</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			  </div>
+			  <div class="modal-body">
+					<label for="recipient-name" class="col-form-label">Title:</label>
+					<input id="eventtitlemodal" type="text" class="form-control" id="title-name">
+
+					<label for="recipient-name" class="col-form-label">Type:</label>
+					<input id="eventtypemodal" type="text" class="form-control" id="type-name">
+
+					<input type="color" id="colorpicker" value="#0000ff">
+
+					<label for="repeatids">Repeat:</label>
+					<div id="repeatids">
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="checkbox" id="rMon" value="1">
+							<label class="form-check-label" for="inlineCheckbox1">M</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="checkbox" id="rTue" value="2">
+							<label class="form-check-label" for="inlineCheckbox2">Tu</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="checkbox" id="rWed" value="3">
+							<label class="form-check-label" for="inlineCheckbox2">W</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="checkbox" id="rThu" value="4">
+							<label class="form-check-label" for="inlineCheckbox2">Th</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="checkbox" id="rFri" value="5">
+							<label class="form-check-label" for="inlineCheckbox2">F</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="checkbox" id="rSat" value="6">
+							<label class="form-check-label" for="inlineCheckbox2">S</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="checkbox" id="rSun" value="7">
+							<label class="form-check-label" for="inlineCheckbox3">Su</label>
+						</div>	
+					</div>
+
+					<label for="curstime" class="col-form-label">Start:</label>
+					<select class="form-select" aria-label="Default select example" id="curstime"> 
+						<option class="modalstart" selected>Open this select menu</option>
+						<option class="modalstart" value="1">One</option>
+						<option class="modalstart" value="2">Two</option>
+						<option class="modalstart" value="3">Three</option>
+						<option class="modalstart" value="3">Three</option>
+					</select>
+
+				  <label for="curetime" class="col-form-label">End:</label>
+				  <select class="form-select" aria-label="Default select example" id="curetime">
+					<option class="modalend" selected>Open this select menu</option>
+					<option class="modalend" value="1">One</option>
+					<option class="modalend" value="2">Two</option>
+					<option class="modalend" value="3">Three</option>
+					<option class="modalend" value="3">Three</option>
+				  </select>
+
+				  <div class="mb-3">
+					<label for="message-text" class="col-form-label">Description:</label>
+					<textarea id="eventdesmodal" class="form-control" id="message-text"></textarea>
+				  </div>
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				<button id="neweventbutton" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		<!-- <select id="colorselector">
+			<option value="106" data-color="#A0522D">sienna</option>
+			<option value="47" data-color="#CD5C5C" selected="selected">indianred</option>
+			<option value="87" data-color="#FF4500">orangered</option>
+			...
+			<option value="15" data-color="#DC143C">crimson</option>
+			<option value="24" data-color="#FF8C00">darkorange</option>
+			<option value="78" data-color="#C71585">mediumvioletred</option>
+		</select> -->
+
+		<div class="container2">
+
+			<div class="button-bar">
+				<button id="reset" type="button" class="btn btn-outline-secondary">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+						<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+						<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+					</svg>
+				</button>
+			</div>
+
+			<!-- <a tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="And here's some amazing content. It's very engaging. Right?">Dismissible popover</a> -->
+			<div id="gridting" class="grid">
+				<!-- <div class="box"></div> -->
+				<div class="row2">
+					<div class="corner">
+						<!-- <a tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="And here's some amazing content. It's very engaging. Right?">Dismissible popover</a> -->
+						<!-- <button type="button" id = "dick" class="btn btn-outline-secondary" data-toggle="popover" data-placement="top" title="adjust times" data-html="true">
+							<svg class = "clock-hover" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-fill" viewBox="0 0 16 16" style="display:flex;">
+								<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+							</svg>
+						</button> -->
+						<!-- <a tabindex="0" id="dick" class="btn btn-outline-secondary" role="button" data-bs-toggle="popover" data-bs-placement="right" title="Dismissible popover" data-bs-html="true" sanitize="false" data-bs-content='
+						<h1>hello there</h1>
+						<div class="mb-3">
+							yoooooo nigella
+							<label for="exampleFormControlInput1" class="form-label">Email address</label>
+							<input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+						</div>
+						'>
+							<svg class = "clock-hover" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-fill" viewBox="0 0 16 16" style="display:flex;">
+								<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+							</svg>
+						</a> -->
+					
+						<!-- <button id = "dick" class="svg-hover">
+							<svg class = "clock-hover" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-fill" viewBox="0 0 16 16">
+								<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+							</svg>
+						</button> -->
+						<button id="ting" type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
+							<svg class = "clock-hover" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-fill" viewBox="0 0 16 16" style="display:flex;">
+								<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+							</svg>
+						</button>
+					</div>
+
+					<div class="weekdays">
+						<span class="full-text">Monday</span>
+						<span class="short-text">Mon</span>
+					</div>
+					<div class="weekdays">
+						<span class="full-text">Tuesday</span>
+						<span class="short-text">Tue</span>
+					</div>
+					<div class="weekdays">
+						<span class="full-text">Wednesday</span>
+						<span class="short-text">Wed</span>
+					</div>
+					<div class="weekdays">
+						<span class="full-text">Thursday</span>
+						<span class="short-text">Thu</span>
+					</div>
+					<div class="weekdays">
+						<span class="full-text">Friday</span>
+						<span class="short-text">Fri</span>
+					</div>
+					<div class="weekdays">
+						<span class="full-text">Saturday</span>
+						<span class="short-text">Sat</span>
+					</div>
+					<div class="weekdays">
+						<span class="full-text">Sunday</span>
+						<span class="short-text">Sun</span>
+					</div>
+				</div>
+
+				<div class="row2">
+					<div class="times">9am</div>
+					<div id="1-9am" class="cells"></div>
+					<div id="2-9am" class="cells"></div>
+					<div id="3-9am" class="cells"></div>
+					<div id="4-9am" class="cells"></div>
+					<div id="5-9am" class="cells"></div>
+					<div id="6-9am" class="cells"></div>
+					<div id="7-9am" class="cells"></div>
+				</div>
+
+				<div class="row2">
+					<div class="times">10am</div>
+					<div id="1-10am" class="cells"></div>
+					<div id="2-10am" class="cells"></div>
+					<div id="3-10am" class="cells"></div>
+					<div id="4-10am" class="cells"></div>
+					<div id="5-10am" class="cells"></div>
+					<div id="6-10am" class="cells"></div>
+					<div id="7-10am" class="cells"></div>
+				</div>
+
+				<div class="row2">
+					<div class="times">11am</div>
+					<div id="1-11am" class="cells"></div>
+					<div id="2-11am" class="cells"></div>
+					<div id="3-11am" class="cells"></div>
+					<div id="4-11am" class="cells"></div>
+					<div id="5-11am" class="cells"></div>
+					<div id="6-11am" class="cells"></div>
+					<div id="7-11am" class="cells"></div>
+				</div>
+
+				<div class="row2">
+					<div class="times">Noon</div>
+					<div id="1-12am" class="cells"></div>
+					<div id="2-12am" class="cells"></div>
+					<div id="3-12am" class="cells"></div>
+					<div id="4-12am" class="cells"></div>
+					<div id="5-12am" class="cells"></div>
+					<div id="6-12am" class="cells"></div>
+					<div id="7-12am" class="cells"></div>
+				</div>
+
+				<div class="row2">
+					<div class="times">1pm</div>
+					<div id="1-1pm" class="cells"></div>
+					<div id="2-1pm" class="cells"></div>
+					<div id="3-1pm" class="cells"></div>
+					<div id="4-1pm" class="cells"></div>
+					<div id="5-1pm" class="cells"></div>
+					<div id="6-1pm" class="cells"></div>
+					<div id="7-1pm" class="cells"></div>
+				</div>
+
+				<div class="row2">
+					<div class="times">2pm</div>
+					<div id="1-2pm" class="cells"></div>
+					<div id="2-2pm" class="cells"></div>
+					<div id="3-2pm" class="cells"></div>
+					<div id="4-2pm" class="cells"></div>
+					<div id="5-2pm" class="cells"></div>
+					<div id="6-2pm" class="cells"></div>
+					<div id="7-2pm" class="cells"></div>
+				</div>
+
+				<div class="row2">
+					<div class="times">3pm</div>
+					<div id="1-3pm" class="cells"></div>
+					<div id="2-3pm" class="cells"></div>
+					<div id="3-3pm" class="cells"></div>
+					<div id="4-3pm" class="cells"></div>
+					<div id="5-3pm" class="cells"></div>
+					<div id="6-3pm" class="cells"></div>
+					<div id="7-3pm" class="cells"></div>
+				</div>
+
+				<div class="row2">
+					<div class="times">4pm</div>
+					<div id="1-4pm" class="cells"></div>
+					<div id="2-4pm" class="cells"></div>
+					<div id="3-4pm" class="cells"></div>
+					<div id="4-4pm" class="cells"></div>
+					<div id="5-4pm" class="cells"></div>
+					<div id="6-4pm" class="cells"></div>
+					<div id="7-4pm" class="cells"></div>
+				</div>
+
+				<div class="row2">
+					<div class="times">5pm</div>
+					<div id="1-5pm" class="cells"></div>
+					<div id="2-5pm" class="cells"></div>
+					<div id="3-5pm" class="cells"></div>
+					<div id="4-5pm" class="cells"></div>
+					<div id="5-5pm" class="cells"></div>
+					<div id="6-5pm" class="cells"></div>
+					<div id="7-5pm" class="cells"></div>
+				</div>
+
+				<!-- <div id="test">test</div> -->
+			</div>
+		</div>
+
+		<!-- Optional JavaScript; choose one of the two! -->
+
+		<!-- Option 1: Bootstrap Bundle with Popper -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+ 
+		<!-- Option 2: Separate Popper and Bootstrap JS -->
+		<!--
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+		-->
+		<script src="script.js"></script>
+	</body>
+</html>
