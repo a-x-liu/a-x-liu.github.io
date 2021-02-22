@@ -1,3 +1,4 @@
+// Event Datastructure
 class tevent {
 	constructor (title, type, repeat, start, end, description, clicked) {
 		this.title = title;
@@ -22,21 +23,24 @@ class tevent {
 	}
 }
 
-//for popovers
+
+// Bootstrap Declarations
+// for popovers
 var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
 var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-  return new bootstrap.Popover(popoverTriggerEl)
+	return new bootstrap.Popover(popoverTriggerEl)
 })
 
+var eventData = new Map();
 var corner_size = "1-9am";
 
-//key: day and time slot (id should match the html id) -> value: event
-var eventData = new Map();
+// Global Variables
+var gridDrag = false;
+var clickdown = false;
+var curclick = -1;
+var curclickend = -1;
 
-var event_tmp = document.createElement("div");
-event_tmp.innerHTML = '<div class="box"></div>';
-event_tmp.style.width = document.getElementById("1-9am").offsetLeft;
-
+// Helper Functions ///////////////////////////////////////////////////////////////////////////////
 function convertidtoTime (string) {
 	var ans = "";
 	for (var i=2; i<string.length; i++) {
@@ -46,17 +50,82 @@ function convertidtoTime (string) {
 	return ans;
 }
 
+function timetonum(string) {
+	var ans = "";
+	for (var i=0; i<string.length; i++) {
+		if (string[i] == ":") break;
+		ans += string[i];
+	}
+	ans = parseInt(ans);
+	if (string[string.length-2] == "p") ans += 12
+	return ans;
+}
 
-var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-  return new bootstrap.Popover(popoverTriggerEl);
-})
+function createEvent (title, type, des, start ,end) {
+	let tmp = new tevent(title, type, 1, start, end, des, curclick);
+	let id = curclick[0] + ": " + timetonum(start) + "-" + timetonum(end);
+	eventData.set(id, tmp);
+	return id;
+}
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
-var gridDrag = false;
-var clickdown = false;
-var curclick = -1;
-var curclickend = -1;
+// Initialize cells
+function initcells() {
+	var a = document.getElementsByClassName("cells");
+	for (var i=0; i<a.length; i++) {
+		a[i].addEventListener("mouseover", function( event ) {
+			if (clickdown == true && gridDrag == true) {
+				var curday = curclick[0];
+				if (this.id[0] == curday) {
+					this.style.backgroundColor = '#34EBE5';
+				}
+			} else {
+				this.style.backgroundColor = '#34EBE5';
+				document.body.style.cursor = 'crosshair';
+			}
+		}, false);
 
+		a[i].addEventListener("mouseout", function( event ) {
+			if (gridDrag == true && clickdown == true) {
+
+			} else {
+				this.style.backgroundColor = 'white';
+				document.body.style.cursor = 'default';
+			}
+		}, false);
+
+		a[i].addEventListener("mousedown", function( event ) {
+			// highlight the mouseover target
+			//a[i].style.backgroundColor = 'white';
+			this.style.backgroundColor = '#34EBE5';
+			document.body.style.cursor = 'row-resize';
+			clickdown = true;
+			curclick = this.id;
+		}, false);
+
+		a[i].addEventListener("mouseup", function( event ) {
+			// highlight the mouseover target
+			//a[i].style.backgroundColor = 'white';
+			this.style.backgroundColor = 'green';
+			gridDrag = false;
+			clickdown = false;
+			curclickend = this.id;
+			console.log(this);
+			// we create a popup modal here
+			let modal = new bootstrap.Modal(document.getElementById('timeModal'), {
+			});
+			modal.show();
+
+			let reset = document.getElementsByClassName("cells");
+			for (let i=0; i<reset.length; i++) {
+				reset[i].style.backgroundColor = "white";
+			}
+		}, false);
+	}
+}
+
+// Setting up all the documents event listener
+// For detecting movement in the grid -> changing cursor
 document.getElementById("gridting").addEventListener("mousemove", function (event) {
 	gridDrag = true;
 	if (clickdown == true) {
@@ -64,13 +133,9 @@ document.getElementById("gridting").addEventListener("mousemove", function (even
 	}
 });
 
+// Setting up the modal -> creating the eventmodal for the when it appears
 var timemodal = document.getElementById('timeModal')
 timemodal.addEventListener('show.bs.modal', function (event) {
-	// need to deal with
-	// - start is later than end
-	// - mouse up on a different day -> we just do the same time on the same day
-
-	//reset everything -> repeat title type des
 	var reset = timemodal.querySelectorAll('.form-check-input');
 	for (var i=0; i<reset.length; i++) {
 		reset[i].checked = false;
@@ -111,73 +176,8 @@ timemodal.addEventListener('show.bs.modal', function (event) {
 	start[4].innerHTML = convertidtoTime(curclickend) + ":00" + curclickend[curclickend.length-2] + curclickend[curclickend.length-1];
 });
 
-function rowdrag() {
-	var a = true;
-}
-
-function initcells() {
-	var a = document.getElementsByClassName("cells");
-	for (var i=0; i<a.length; i++) {
-		a[i].addEventListener("mouseover", function( event ) {
-			// highlight the mouseover target
-			//a[i].style.backgroundColor = 'blue';
-			if (clickdown == true && gridDrag == true) {
-				var curday = curclick[0];
-				if (this.id[0] == curday) {
-					this.style.backgroundColor = '#34EBE5';
-				}
-			} else {
-				this.style.backgroundColor = '#34EBE5';
-				document.body.style.cursor = 'crosshair';
-			}
-		}, false);
-
-		a[i].addEventListener("mouseout", function( event ) {
-			// highlight the mouseover target
-			//a[i].style.backgroundColor = 'white';
-			//if drag equal tru
-			if (gridDrag == true && clickdown == true) {
-
-			} else {
-				this.style.backgroundColor = 'white';
-				document.body.style.cursor = 'default';
-			}
-		}, false);
-
-		a[i].addEventListener("mousedown", function( event ) {
-			// highlight the mouseover target
-			//a[i].style.backgroundColor = 'white';
-			this.style.backgroundColor = '#34EBE5';
-			document.body.style.cursor = 'row-resize';
-			clickdown = true;
-			curclick = this.id;
-		}, false);
-
-		a[i].addEventListener("mouseup", function( event ) {
-			// highlight the mouseover target
-			//a[i].style.backgroundColor = 'white';
-			this.style.backgroundColor = 'green';
-			gridDrag = false;
-			clickdown = false;
-			curclickend = this.id;
-			console.log(this);
-			// we create a popup modal here
-			let modal = new bootstrap.Modal(document.getElementById('timeModal'), {
-			});
-			modal.show();
-
-			let reset = document.getElementsByClassName("cells");
-			for (let i=0; i<reset.length; i++) {
-				reset[i].style.backgroundColor = "white";
-			}
-		}, false);
-	}
-}
-
-initcells();
-
+// function to create the event once button is clicked -> add checker to make sure information is passed
 var y = document.getElementById("dick");
-
 y.onclick = function () {
 	var start = parseInt(document.getElementById("start").value);
 	var end = parseInt(document.getElementById("end").value);
@@ -372,25 +372,6 @@ y.onclick = function () {
 }
 
 var eventbutton = document.getElementById("neweventbutton");
-
-function timetonum(string) {
-	var ans = "";
-	for (var i=0; i<string.length; i++) {
-		if (string[i] == ":") break;
-		ans += string[i];
-	}
-	ans = parseInt(ans);
-	if (string[string.length-2] == "p") ans += 12
-	return ans;
-}
-
-function createEvent (title, type, des, start ,end) {
-	let tmp = new tevent(title, type, 1, start, end, des, curclick);
-	let id = curclick[0] + ": " + timetonum(start) + "-" + timetonum(end);
-	eventData.set(id, tmp);
-	return id;
-}
-
 eventbutton.onclick = function () {
 	let newevent = document.getElementById('timemodal');
 	let title = document.getElementById('eventtitlemodal').value;
@@ -501,7 +482,6 @@ window.addEventListener('resize', function () {
 });
 
 const reset_button = document.getElementById("reset");
-
 reset_button.addEventListener("click", function () {
 	let boxes = document.getElementsByClassName("box");
 	console.log("trying to delete");
@@ -511,15 +491,5 @@ reset_button.addEventListener("click", function () {
 	}
 	eventData = new Map();
 });
-/*
-var a = document.getElementsByClassName("cells");
-a[0].addEventListener("mouseover", function( event ) {
-  // highlight the mouseover target
-a[0].style.backgroundColor = 'blue';
-}, false);
-a[0].addEventListener("mouseout", function( event ) {
-  // highlight the mouseover target
-a[0].style.backgroundColor = 'white';
-}, false);
-*/
 
+initcells();
