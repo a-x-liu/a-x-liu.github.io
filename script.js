@@ -181,189 +181,60 @@ var y = document.getElementById("dick");
 y.onclick = function () {
 	var start = parseInt(document.getElementById("start").value);
 	var end = parseInt(document.getElementById("end").value);
-
 	if (end <= start) return;
 
+	//create the header row
 	var curgrid = document.getElementById("gridting");
-	var childs = curgrid.children;
-	curgrid.innerHTML = `<div class="row2">
-							<div class="corner">
-								<!-- <a tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="And here's some amazing content. It's very engaging. Right?">Dismissible popover</a> -->
-								<!-- <button type="button" id = "dick" class="btn btn-outline-secondary" data-toggle="popover" data-placement="top" title="adjust times" data-html="true">
-									<svg class = "clock-hover" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-fill" viewBox="0 0 16 16" style="display:flex;">
-										<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
-									</svg>
-								</button> -->
-								<!-- <a tabindex="0" id="dick" class="btn btn-outline-secondary" role="button" data-bs-toggle="popover" data-bs-placement="right" title="Dismissible popover" data-bs-html="true" sanitize="false" data-bs-content='
-								<h1>hello there</h1>
-								<div class="mb-3">
-									yoooooo nigella
-									<label for="exampleFormControlInput1" class="form-label">Email address</label>
-									<input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-								</div>
-								'>
-									<svg class = "clock-hover" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-fill" viewBox="0 0 16 16" style="display:flex;">
-										<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
-									</svg>
-								</a> -->
-							
-								<!-- <button id = "dick" class="svg-hover">
-									<svg class = "clock-hover" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-fill" viewBox="0 0 16 16">
-										<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
-									</svg>
-								</button> -->
-								<button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
-									<svg class = "clock-hover" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-fill" viewBox="0 0 16 16" style="display:flex;">
-										<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
-									</svg>
-								</button>
-							</div>
+	curgrid.innerHTML = daysTemplate
 
-							<div class="weekdays">
-								<span class="full-text">Monday</span>
-								<span class="short-text">Mon</span>
-							</div>
-							<div class="weekdays">
-								<span class="full-text">Tuesday</span>
-								<span class="short-text">Tue</span>
-							</div>
-							<div class="weekdays">
-								<span class="full-text">Wednesday</span>
-								<span class="short-text">Wed</span>
-							</div>
-							<div class="weekdays">
-								<span class="full-text">Thursday</span>
-								<span class="short-text">Thu</span>
-							</div>
-							<div class="weekdays">
-								<span class="full-text">Friday</span>
-								<span class="short-text">Fri</span>
-							</div>
-							<div class="weekdays">
-								<span class="full-text">Saturday</span>
-								<span class="short-text">Sat</span>
-							</div>
-							<div class="weekdays">
-								<span class="full-text">Sunday</span>
-								<span class="short-text">Sun</span>
-							</div>
-						</div>`;
-
+	//update the root information
 	document.documentElement.style.setProperty('--rowNum', end-start+1);
 	document.documentElement.style.setProperty('--start', start);
 	document.documentElement.style.setProperty('--end', end);
 
+	//update the row
 	for (var i=start; i<=end; i++) {
 		var tmp = document.createElement("div");
 		tmp.className = "row2";
-		if (i<12) {
-			tmp.innerHTML = `<div class="times">${i}am</div>
-							<div id="1-${i}am" class="cells"></div>
-							<div id="2-${i}am" class="cells"></div>
-							<div id="3-${i}am" class="cells"></div>
-							<div id="4-${i}am" class="cells"></div>
-							<div id="5-${i}am" class="cells"></div>
-							<div id="6-${i}am" class="cells"></div>
-							<div id="7-${i}am" class="cells"></div>`
-		} else if (i === 12) {
-			tmp.innerHTML = `<div class="times">Noon</div>
-							<div id="1-${i}am" class="cells"></div>
-							<div id="2-${i}am" class="cells"></div>
-							<div id="3-${i}am" class="cells"></div>
-							<div id="4-${i}am" class="cells"></div>
-							<div id="5-${i}am" class="cells"></div>
-							<div id="6-${i}am" class="cells"></div>
-							<div id="7-${i}am" class="cells"></div>`
-		} else if (i === 24) {
-			tmp.innerHTML = `<div class="times">Midnight</div>
-							<div id="1-12pm" class="cells"></div>
-							<div id="2-12pm" class="cells"></div>
-							<div id="3-12pm" class="cells"></div>
-							<div id="4-12pm" class="cells"></div>
-							<div id="5-12pm" class="cells"></div>
-							<div id="6-12pm" class="cells"></div>
-							<div id="7-12pm" class="cells"></div>`
-		} else {
-			tmp.innerHTML = `<div class="times">${i-12}pm</div>
-							<div id="1-${i-12}pm" class="cells"></div>
-							<div id="2-${i-12}pm" class="cells"></div>
-							<div id="3-${i-12}pm" class="cells"></div>
-							<div id="4-${i-12}pm" class="cells"></div>
-							<div id="5-${i-12}pm" class="cells"></div>
-							<div id="6-${i-12}pm" class="cells"></div>
-							<div id="7-${i-12}pm" class="cells"></div>`
-		}
+		tmp.innerHTML = rowTemplate(i);
 		document.getElementById("gridting").appendChild(tmp);
 	}
 	initcells();
+
 	//we gotta insert the stuff again
-	console.log(end);
 	for (let[k, v]of eventData) {//k -> id, v -> event data
 		//for each k check if the new timeslot affect it
-		var tmp_event_data = new Map();
-		let new_start = timetonum(v.start);
-		let new_end = timetonum(v.end);
-		let start_12h = start;
-		let end_12h = end;
-		if (document.getElementById("start").value <= 12) start_12h += "am";
-		else {
-			start_12h -= 12;
-			start_12h += "pm";
-		}
-		if (document.getElementById("end").value <= 12) end_12h += "am";
-		else {
-			end_12h -= 12;
-			end_12h += "pm";
-		}
-		corner_size = "1-" + start_12h;
-		console.log(corner_size)
+		var tmp_event_data = new Map(); // new tmp map
+		let new_start = timetonum(v.start); // current event's start
+		let new_end = timetonum(v.end); // current event's end
+		let start_12h = valuetostring(start); // new start string
+		let end_12h = valuetostring(end); // new end string
 
-		let new_id = "";
+		//reset the sizing cell
+		corner_size = "1-" + start_12h;
+
+		let new_id = k;
 		//if the time slots affect it -> check affect start/ end/ both
 		if (start > new_start && end < new_end) {
 			v.start = start_12h;
 			v.end = end_12h;
 			v.clicked = k[0] + "-" + start_12h;
 			new_id = k[0] + ": " + start + "-" + end;
-			console.log(v.getclicked);
-			document.getElementById(k).style.width = document.getElementById(corner_size).clientWidth + "px";
-			document.getElementById(k).style.height = (document.getElementById(corner_size).clientHeight * (timetonum(v.end) - timetonum(v.start))) + "px";
-			document.getElementById(k).style.transform = "translate(" + document.getElementById(v.getclicked).offsetLeft + "px," + document.getElementById(v.getclicked).parentNode.offsetTop +"px)";
-			console.log(document.getElementById(k).childNodes);
-			document.getElementById(k).childNodes[3].innerHTML = `(${v.start} - ${v.end})`;
-			document.getElementById(k).id = new_id; 
-			k = new_id;
+			updateEventSizing(k, corner_size, v.start, v.end, new_id, v.clicked);
 		} else {
 			if (start > new_start) {
 				v.start = start_12h;
 				v.clicked = k[0] + "-" + start_12h;
 				new_id = k[0] + ": " + start + "-" + new_end;
-				document.getElementById(k).style.width = document.getElementById(corner_size).clientWidth + "px";
-				document.getElementById(k).style.height = (document.getElementById(corner_size).clientHeight * (timetonum(v.end) - timetonum(v.start))) + "px";
-				document.getElementById(k).style.transform = "translate(" + document.getElementById(v.getclicked).offsetLeft + "px," + document.getElementById(v.getclicked).parentNode.offsetTop +"px)";
-				document.getElementById(k).childNodes[3].innerHTML = `(${v.start} - ${v.end})`;
-				document.getElementById(k).id = new_id; 
-				k = new_id;
+				updateEventSizing(k, corner_size, v.start, v.end, new_id, v.clicked);
 			} else if (end < new_end) {
 				v.end = end_12h;
 				new_id = k[0] + ": " + new_start + "-" + end;
-				//bug when the id changes idk why
-				document.getElementById(k).style.width = document.getElementById(corner_size).clientWidth + "px";
-				document.getElementById(k).style.height = (document.getElementById(corner_size).clientHeight * (timetonum(v.end) - timetonum(v.start))) + "px";
-				document.getElementById(k).style.transform = "translate(" + document.getElementById(v.getclicked).offsetLeft + "px," + document.getElementById(v.getclicked).parentNode.offsetTop +"px)";
-				document.getElementById(k).childNodes[3].innerHTML = `(${v.start} - ${v.end})`;
-				document.getElementById(k).id = new_id; 
-				k = new_id;
+				updateEventSizing(k, corner_size, v.start, v.end, new_id, v.clicked);
 			}
 		}
-
 		tmp_event_data.set(new_id, v);
-		//gotta update popover
-		document.getElementById(new_id).setAttribute("title", v.title + ` (${v.start} - ${v.end})`)
-		
-		//if new start > current start: adjust v data (start, end, clicked) and the id(k)
-
-		//if new end < current start: adjust v data and the id(k)
+		document.getElementById(new_id).setAttribute("title", v.title + ` (${v.start} - ${v.end})`);
 	}
 	eventData = tmp_event_data;
 	for (let[k,v] in eventData) {
@@ -381,44 +252,17 @@ eventbutton.onclick = function () {
 	let start = document.getElementById("curstime").value;
 	let end = document.getElementById("curetime").value;
 
-	let num = timetonum(end) - timetonum(start);
-	console.log(num);
+	if (timetonum(end) <= timetonum(start)) {
+		console.log("we are not creating", start, end);
+		return;
+	}
 
-	var event_tmp = document.createElement("div");
-	// function to create id and add it to the db
-	// tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover
 	cur_id = createEvent(title, type, des, start, end, curclick);
-	event_tmp.id = cur_id;
-	event_tmp.className = "box";
-	//event_tmp.tabIndex = "0"; event_tmp.setdatabstoggle = "popover"; event_tmp.databstrigger = "hover focus"; event_tmp.databscontent = "Disabled popover";
-	event_tmp.setAttribute("tabIndex", "0"); event_tmp.setAttribute("data-bs-toggle", "popover"); event_tmp.setAttribute("data-bs-content", des);
-	event_tmp.setAttribute("data-bs-container", "body"); event_tmp.setAttribute("title", title + ` (${start} - ${end})`);
-	event_tmp.innerHTML = `
-		<button id="d${cur_id}" class="eventDelete" type="button"></button>
-		<h5 style="color: white; word-wrap: break-word; margin-bottom: 0px; font-size: 1.3vw;">${title}</h5>
-		<p style="color: white; word-wrap: break-word; margin-bottom: 4px; font-size: 0.7vw;">(${start} - ${end})</p>
-		<div style="border-bottom: 1px solid white; margin-bottom: 2px;"></div>
-		<p style="color: white; word-wrap: break-word; font-size: 0.9vw;">${des}</p>
-	`;
+	var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, curclick);
 
-	document.getElementsByClassName("container2")[0].append(event_tmp);
-	document.getElementById(cur_id).style.backgroundColor = document.getElementById("colorpicker").value;
-	document.getElementById(cur_id).style.width = document.getElementById(corner_size).clientWidth + "px";
-	document.getElementById(cur_id).style.height = document.getElementById(corner_size).clientHeight * num + "px";
-	//needa do smthing about this when the size of the window gets changed
-	document.getElementById(cur_id).style.transform = "translate(" + document.getElementById(curclick).offsetLeft + "px," + document.getElementById(curclick).parentNode.offsetTop +"px)";
+	createPopover(event_tmp, cur_id);
 
-	var popover = new bootstrap.Popover(event_tmp, "");
-	document.getElementById(cur_id).addEventListener("mouseenter", function () {
-		popover.show();
-	});
-	document.getElementById(cur_id).addEventListener("mouseleave", function () {
-		popover.hide();
-	});
-
-	console.log(popover)
-
-	const cur_box = document.getElementById(cur_id);
+	/*
 	if (cur_box.clientHeight < cur_box.scrollHeight) {
 		//we have a overflow
 		console.log("we have an overflow");
@@ -429,16 +273,7 @@ eventbutton.onclick = function () {
 		<button id="d${cur_id}" class="eventDelete" type="button">
 		</button>
 		<h5 style="color: white; word-wrap: break-word; margin-bottom: 0px; font-size: 1.3vw;">HOVER ME!</h5>`;
-	}
-	document.getElementById("d" + cur_id).addEventListener("mouseenter", function () {
-		popover.hide();
-	});
-	document.getElementById("d" + cur_id).addEventListener("mouseleave", function () {
-		popover.show();
-	});
-	document.getElementById("d" + cur_id).addEventListener("click", function () {
-		this.parentElement.remove();
-	});
+	}*/
 }
 
 window.addEventListener('resize', function () {
