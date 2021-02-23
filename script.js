@@ -258,6 +258,16 @@ eventbutton.onclick = function () {
 	let start = document.getElementById("curstime").value;
 	let end = document.getElementById("curetime").value;
 
+	//WE CHECK IF THIS EVENT CAN BE ADDED 
+	for (let [k,v] of eventData) {
+		console.log(curclick, k, v);
+		if (curclick[0] != v.clicked[0]) continue;
+		if (start > v.end || v.start > v.end) {
+			//overlap
+			return;
+		}
+	}
+
 	if (timetonum(end) <= timetonum(start)) {
 		console.log("we are not creating", start, end);
 		return;
@@ -266,19 +276,6 @@ eventbutton.onclick = function () {
 	cur_id = createEvent(title, type, des, start, end, curclick);
 	var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, curclick);
 	createPopover(event_tmp, cur_id);
-
-	/*
-	if (cur_box.clientHeight < cur_box.scrollHeight) {
-		//we have a overflow
-		console.log("we have an overflow");
-		event_tmp.style.display = "flex";
-		event_tmp.style.alignItems = "center";
-		event_tmp.style.justifyContent = "center"
-		event_tmp.innerHTML = `
-		<button id="d${cur_id}" class="eventDelete" type="button">
-		</button>
-		<h5 style="color: white; word-wrap: break-word; margin-bottom: 0px; font-size: 1.3vw;">HOVER ME!</h5>`;
-	}*/
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////// fix from here
@@ -434,6 +431,10 @@ cur_id = createEvent(title, type, des, start, end, clicked);
 var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, clicked);
 createPopover(event_tmp, cur_id);
 document.getElementById(cur_id).style.backgroundColor = "dodgerblue";
+
+/*for (let[k,v] of eventData) {
+	console.log(k,v);
+}*/
 
 initcells();
 
