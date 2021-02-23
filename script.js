@@ -276,7 +276,8 @@ eventbutton.onclick = function () {
 		console.log(curclick,":", timetonum(start), timetonum(v.end), timetonum(v.start), timetonum(end));
 		if (curclick[0] != v.clicked[0]) continue;
 		console.log(timetonum(start), timetonum(v.end), timetonum(end), timetonum(v.start));
-		if (timetonum(v.start) < timetonum(end) || timetonum(start) > timetonum(v.end)) {
+		if (timetonum(end) <= timetonum(v.start) || timetonum(start) >= timetonum(v.end)) continue;
+		else {
 			let msg = `Invalid Input: The times you have selected clash with another event. Please
 			enter a different time slot.`;
 			document.getElementById("timeModal").childNodes[1].childNodes[1].appendChild(createAlert(msg));
