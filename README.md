@@ -10,3 +10,6 @@ Features that are currently being worked on (ordered by urgency):
 - click and drag edges of box to 
 
 Other updates in the works...
+
+Known Bugs:
+- on windows when cancelling a new event click and drag from certain cells stop working, will fix itself after click and dragging other boxes and exiting them (not sure what is happening here)
