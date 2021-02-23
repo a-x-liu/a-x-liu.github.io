@@ -105,6 +105,16 @@ function rowTemplate(i) {
 
 function valuetostring(num) {
     let ans = num;
+    if (num <= 12) ans += ":00am";
+    else {
+        ans -= 12;
+        ans += ":00pm";
+    }
+    return ans;
+}
+
+function valuetoCellID(num) {
+    let ans = num;
     if (num <= 12) ans += "am";
     else {
         ans -= 12;
@@ -114,20 +124,23 @@ function valuetostring(num) {
 }
 
 function updateEventLocation(id, corner_size, start, end, clicked) {
+    //console.log(clicked, start, end);
     document.getElementById(id).style.width = document.getElementById(corner_size).clientWidth + "px";
     document.getElementById(id).style.height = (document.getElementById(corner_size).clientHeight * (timetonum(end) - timetonum(start))) + "px";
     document.getElementById(id).style.transform = "translate(" + document.getElementById(clicked).offsetLeft + "px," + document.getElementById(clicked).parentNode.offsetTop +"px)";
+    if (document.getElementById(id).clientHeight < document.getElementById(id).scrollHeight) {
+        switchEventDisplay(document.getElementById(id), id);
+    }
 }
 
 function updateEventSizing(id, corner_size, start, end, new_id, clicked) {
-    console.log(document.getElementById(id).childNodes);
     updateEventLocation(id, corner_size, start, end, clicked);
-    document.getElementById(id).childNodes[5].innerHTML = `(${start} - ${end})`;
+    if (document.getElementById(id).childNodes.length != 4) document.getElementById(id).childNodes[5].innerHTML = `(${start} - ${end})`;
+    document.getElementById("d" + id).id = "d" + new_id;
     document.getElementById(id).id = new_id; 
 }
 
 function switchEventDisplay(event_tmp, cur_id) {
-    console.log("we have an overflow");
     event_tmp.style.display = "flex";
     event_tmp.style.alignItems = "center";
     event_tmp.style.justifyContent = "center"
@@ -179,4 +192,16 @@ function createPopover(event, id) {
 	document.getElementById("d" + id).addEventListener("click", function () {
 		this.parentElement.remove();
 	}); 
+}
+
+function createAlert (string) {
+    let doc = new DOMParser().parseFromString(`
+    <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-left: 10px; margin-right: 10px; word-wrap: break-word;">
+        ${string}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>`,
+    'text/html');
+    
+    //console.log(doc.body.firstChild);
+    return doc.body.firstChild;
 }
