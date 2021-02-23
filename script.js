@@ -181,19 +181,24 @@ var y = document.getElementById("dick");
 y.onclick = function () {
 	var start = parseInt(document.getElementById("start").value);
 	var end = parseInt(document.getElementById("end").value);
-	if (end <= start) return;
+	if (end <= start) {
+		let msg = `Invalid Input: Currently the only valid inputs are when the start time is strictly
+		earlier than the end time. We are currently expanding the avaliable combinations :)`;
+		document.getElementById("exampleModal").childNodes[1].childNodes[1].appendChild(createAlert(msg));
+		return;
+	}
 
 	//create the header row
 	var curgrid = document.getElementById("gridting");
 	curgrid.innerHTML = daysTemplate
 
 	//update the root information
-	document.documentElement.style.setProperty('--rowNum', end-start+1);
+	document.documentElement.style.setProperty('--rowNum', end-start);
 	document.documentElement.style.setProperty('--start', start);
 	document.documentElement.style.setProperty('--end', end);
 
 	//update the row
-	for (var i=start; i<=end; i++) {
+	for (var i=start; i<end; i++) {
 		var tmp = document.createElement("div");
 		tmp.className = "row2";
 		tmp.innerHTML = rowTemplate(i);
@@ -202,50 +207,52 @@ y.onclick = function () {
 	initcells();
 
 	//we gotta insert the stuff again
+	var tmp_event_data = new Map(); // new tmp map
 	for (let[k, v]of eventData) {//k -> id, v -> event data
-		//for each k check if the new timeslot affect it
-		var tmp_event_data = new Map(); // new tmp map
+		//console.log(k,v.start, v.end);
 		let new_start = timetonum(v.start); // current event's start
 		let new_end = timetonum(v.end); // current event's end
 		let start_12h = valuetostring(start); // new start string
 		let end_12h = valuetostring(end); // new end string
 
 		//reset the sizing cell
-		corner_size = "1-" + start_12h;
+		corner_size = document.querySelector(".cells").id;
 
 		//check to make sure event is still valid if not delete
-		if (new_start > end || new_end > start) {
+		if (new_start >= end || new_end <= start) {
+			console.log("we are deleting:", k);
 			document.getElementById(k).remove();
+			eventData.delete(k);
 			continue;
 		}
 
 		let new_id = k;
 		//if the time slots affect it -> check affect start/ end/ both
 		if (start > new_start && end < new_end) {
+			//console.log(k + ": adjusts for start and end");
 			v.start = start_12h;
 			v.end = end_12h;
-			v.clicked = k[0] + "-" + start_12h;
+			v.clicked = k[0] + "-" + valuetoCellID(start);
 			new_id = k[0] + ": " + start + "-" + end;
-			updateEventSizing(k, corner_size, v.start, v.end, new_id, v.clicked);
 		} else {
 			if (start > new_start) {
+				//console.log(k + ": adjusts for start");
 				v.start = start_12h;
-				v.clicked = k[0] + "-" + start_12h;
+				v.clicked = k[0] + "-" + valuetoCellID(start);
 				new_id = k[0] + ": " + start + "-" + new_end;
-				updateEventSizing(k, corner_size, v.start, v.end, new_id, v.clicked);
 			} else if (end < new_end) {
+				//console.log(k + ": adjusts for end");
 				v.end = end_12h;
 				new_id = k[0] + ": " + new_start + "-" + end;
-				updateEventSizing(k, corner_size, v.start, v.end, new_id, v.clicked);
 			}
 		}
+		updateEventSizing(k, corner_size, v.start, v.end, new_id, v.clicked);
 		tmp_event_data.set(new_id, v);
 		document.getElementById(new_id).setAttribute("title", v.title + ` (${v.start} - ${v.end})`);
+		//console.log("--------------------------")
 	}
 	eventData = tmp_event_data;
-	for (let[k,v] in eventData) {
-		console.log(k,v);
-	}
+	$('#exampleModal').modal('hide');
 }
 
 var eventbutton = document.getElementById("neweventbutton");
@@ -257,31 +264,42 @@ eventbutton.onclick = function () {
 	//need to do check her to make sure that start is before end
 	let start = document.getElementById("curstime").value;
 	let end = document.getElementById("curetime").value;
+	if (title == "" || des == "") {
+		let msg = `Invalid Input: Missing title and/or description, please enter this information and 
+		try again.`;
+		document.getElementById("timeModal").childNodes[1].childNodes[1].appendChild(createAlert(msg));
+		return;
+	}
 
 	//WE CHECK IF THIS EVENT CAN BE ADDED 
 	for (let [k,v] of eventData) {
-		console.log(curclick, k, v);
+		console.log(curclick,":", timetonum(start), timetonum(v.end), timetonum(v.start), timetonum(end));
 		if (curclick[0] != v.clicked[0]) continue;
-		if (start > v.end || v.start > v.end) {
-			//overlap
+		console.log(timetonum(start), timetonum(v.end), timetonum(end), timetonum(v.start));
+		if (timetonum(v.start) < timetonum(end) || timetonum(start) > timetonum(v.end)) {
+			let msg = `Invalid Input: The times you have selected clash with another event. Please
+			enter a different time slot.`;
+			document.getElementById("timeModal").childNodes[1].childNodes[1].appendChild(createAlert(msg));
 			return;
 		}
 	}
 
 	if (timetonum(end) <= timetonum(start)) {
-		console.log("we are not creating", start, end);
+		let msg = `Invalid Input: The start time you selected is later than your end time. Please
+		enters a valid start and end time.`;
+		document.getElementById("timeModal").childNodes[1].childNodes[1].appendChild(createAlert(msg));
 		return;
 	}
 
 	cur_id = createEvent(title, type, des, start, end, curclick);
 	var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, curclick);
 	createPopover(event_tmp, cur_id);
+	$('#timeModal').modal('hide');
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////// fix from here
 window.addEventListener('resize', function () {
 	for (let[k, v]of eventData) {
-		console.log(k, v);
 		document.getElementById(k).style.transform = "translate(" + document.getElementById(v.getclicked).offsetLeft + "px," + document.getElementById(v.getclicked).parentNode.offsetTop +"px)";
 		document.getElementById(k).style.width  = document.getElementById(corner_size).clientWidth + "px";
 		let event_tmp = document.getElementById(k);
@@ -345,7 +363,7 @@ createPopover(event_tmp, cur_id);
 document.getElementById(cur_id).style.backgroundColor = "red";
 
 title = "Welcome!";
-des = "Hello, this a simple website that allows you to create a weekly timetable to help you keep track of your're routine.";
+des = "Hello, this a simple website that allows you to create a weekly timetable to help you keep track of your routine.";
 start = "9:00am";
 end = "4:00pm";
 clicked = "3-9am";
@@ -358,7 +376,7 @@ document.getElementById(cur_id).style.backgroundColor = "dodgerBlue";
 title = "Reset Button"
 des = "The button above when clicked will delete all events in the current grid. Click it to get started!!!"
 start = "9:00am";
-end = "12:00am";
+end = "1:00pm";
 clicked = "7-9am";
 curclick = clicked;
 cur_id = createEvent(title, type, des, start, end, clicked);
@@ -412,9 +430,9 @@ document.getElementById(cur_id).style.backgroundColor = "red";
 
 title = "More Features"
 des = "More features and updates will be coming!!"
-start = "2:00pm";
-end = "4:00pm";
-clicked = "4-2pm";
+start = "3:00pm";
+end = "6:00pm";
+clicked = "4-3pm";
 curclick = clicked;
 cur_id = createEvent(title, type, des, start, end, clicked);
 var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, clicked);
@@ -423,9 +441,9 @@ document.getElementById(cur_id).style.backgroundColor = "red";
 
 title = "Link"
 des = "Link to repository: https://github.com/a-x-liu/a-x-liu.github.io"
-start = "4:00pm";
+start = "3:00pm";
 end = "6:00pm";
-clicked = "7-4pm";
+clicked = "7-3pm";
 curclick = clicked;
 cur_id = createEvent(title, type, des, start, end, clicked);
 var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, clicked);
