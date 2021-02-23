@@ -213,6 +213,12 @@ y.onclick = function () {
 		//reset the sizing cell
 		corner_size = "1-" + start_12h;
 
+		//check to make sure event is still valid if not delete
+		if (new_start > end || new_end > start) {
+			document.getElementById(k).remove();
+			continue;
+		}
+
 		let new_id = k;
 		//if the time slots affect it -> check affect start/ end/ both
 		if (start > new_start && end < new_end) {
@@ -259,7 +265,6 @@ eventbutton.onclick = function () {
 
 	cur_id = createEvent(title, type, des, start, end, curclick);
 	var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, curclick);
-
 	createPopover(event_tmp, cur_id);
 
 	/*
@@ -276,8 +281,10 @@ eventbutton.onclick = function () {
 	}*/
 }
 
+////////////////////////////////////////////////////////////////////////////////////////// fix from here
 window.addEventListener('resize', function () {
 	for (let[k, v]of eventData) {
+		console.log(k, v);
 		document.getElementById(k).style.transform = "translate(" + document.getElementById(v.getclicked).offsetLeft + "px," + document.getElementById(v.getclicked).parentNode.offsetTop +"px)";
 		document.getElementById(k).style.width  = document.getElementById(corner_size).clientWidth + "px";
 		let event_tmp = document.getElementById(k);
@@ -327,4 +334,107 @@ reset_button.addEventListener("click", function () {
 	eventData = new Map();
 });
 
+// main function 
+let title = "Event Title"
+let type = "unknown"
+let des = "Add a short or long description of this event :D"
+let start = "11:00am";
+let end = "5:00pm";
+let clicked = "1-11am";
+curclick = clicked;
+cur_id = createEvent(title, type, des, start, end, clicked);
+var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, clicked);
+createPopover(event_tmp, cur_id);
+document.getElementById(cur_id).style.backgroundColor = "red";
+
+title = "Welcome!";
+des = "Hello, this a simple website that allows you to create a weekly timetable to help you keep track of your're routine.";
+start = "9:00am";
+end = "4:00pm";
+clicked = "3-9am";
+curclick = clicked;
+cur_id = createEvent(title, type, des, start, end, clicked);
+var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, clicked);
+createPopover(event_tmp, cur_id);
+document.getElementById(cur_id).style.backgroundColor = "dodgerBlue";
+
+title = "Reset Button"
+des = "The button above when clicked will delete all events in the current grid. Click it to get started!!!"
+start = "9:00am";
+end = "12:00am";
+clicked = "7-9am";
+curclick = clicked;
+cur_id = createEvent(title, type, des, start, end, clicked);
+var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, clicked);
+createPopover(event_tmp, cur_id);
+document.getElementById(cur_id).style.backgroundColor = "darkViolet";
+
+title = "Clock Button"
+des = "Use this button to change the start and end times, it will dynamically resize and delete events."
+start = "10:00am";
+end = "2:00pm";
+clicked = "2-10am";
+curclick = clicked;
+cur_id = createEvent(title, type, des, start, end, clicked);
+var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, clicked);
+createPopover(event_tmp, cur_id);
+document.getElementById(cur_id).style.backgroundColor = "darkViolet";
+
+title = "Dynamic Sizing"
+des = "When event information cannot fit inside the allocated space the information will look like this."
+start = "11:00am";
+end = "12:00am";
+clicked = "4-11am";
+curclick = clicked;
+cur_id = createEvent(title, type, des, start, end, clicked);
+var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, clicked);
+createPopover(event_tmp, cur_id);
+document.getElementById(cur_id).style.backgroundColor = "#088400";
+
+title = "Instructions"
+des = "Click and drag and then release within the grid to create a new event. Then enter some information and watch the information appear."
+start = "1:00pm";
+end = "5:00pm";
+clicked = "5-1pm";
+curclick = clicked;
+cur_id = createEvent(title, type, des, start, end, clicked);
+var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, clicked);
+createPopover(event_tmp, cur_id);
+document.getElementById(cur_id).style.backgroundColor = "Orange";
+
+title = "Gym & Lunch"
+des = "Gym with an instructor. Remember to bring towel and water!"
+start = "10:00am";
+end = "3:00pm";
+clicked = "6-10am";
+curclick = clicked;
+cur_id = createEvent(title, type, des, start, end, clicked);
+var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, clicked);
+createPopover(event_tmp, cur_id);
+document.getElementById(cur_id).style.backgroundColor = "red";
+
+title = "More Features"
+des = "More features and updates will be coming!!"
+start = "2:00pm";
+end = "4:00pm";
+clicked = "4-2pm";
+curclick = clicked;
+cur_id = createEvent(title, type, des, start, end, clicked);
+var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, clicked);
+createPopover(event_tmp, cur_id);
+document.getElementById(cur_id).style.backgroundColor = "red";
+
+title = "Link"
+des = "Link to repository: https://github.com/a-x-liu/a-x-liu.github.io"
+start = "4:00pm";
+end = "6:00pm";
+clicked = "7-4pm";
+curclick = clicked;
+cur_id = createEvent(title, type, des, start, end, clicked);
+var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, clicked);
+createPopover(event_tmp, cur_id);
+document.getElementById(cur_id).style.backgroundColor = "dodgerblue";
+
 initcells();
+
+//MUST WAIT CHECK TO DELETE FOR THE CHECK WHEN RESIZING
