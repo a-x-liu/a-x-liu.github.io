@@ -5,6 +5,9 @@ Features that are currently being worked on (ordered by urgency):
    - add must have astriesks for fields that must be filled
 - Overall better style of the page -> reduce white space
 - better style for the popovers
+Basic page design and functionality will finish by this point
+-------------------------------------------
+Extensions:
 - allowing for more start and end times:
    - timetabling after midnight (e.g 8pm - 2am)
 - click and drag edges of box to 
