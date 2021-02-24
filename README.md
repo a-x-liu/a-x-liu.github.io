@@ -11,6 +11,7 @@ Extensions:
 - allowing for more start and end times:
    - timetabling after midnight (e.g 8pm - 2am)
 - click and drag edges of box to 
+- dark mode lol
 
 Other updates in the works...
 
