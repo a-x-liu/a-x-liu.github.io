@@ -166,7 +166,7 @@ function createEventObject (cur_id, des, title, start, end, corner_size, clicked
     event_tmp.id = cur_id;
 	event_tmp.className = "box";
     event_tmp.setAttribute("tabIndex", "0"); event_tmp.setAttribute("data-bs-toggle", "popover"); event_tmp.setAttribute("data-bs-content", des);
-	event_tmp.setAttribute("data-bs-container", "body"); event_tmp.setAttribute("title", title + ` (${start} - ${end})`);
+	event_tmp.setAttribute("data-bs-container", "body"); event_tmp.setAttribute("title", title);
 	event_tmp.innerHTML = `
 		<button id="d${cur_id}" class="eventDelete" type="button"></button>
 		<h5 style="color: white; word-wrap: break-word; margin-bottom: 0px; font-size: 1.3vw;">${title}</h5>

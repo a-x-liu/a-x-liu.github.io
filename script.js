@@ -299,12 +299,22 @@ eventbutton.onclick = function () {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////// fix from here
-window.addEventListener('resize', function () {
+window.addEventListener('resize', function update () {
 	for (let[k, v]of eventData) {
 		document.getElementById(k).style.transform = "translate(" + document.getElementById(v.getclicked).offsetLeft + "px," + document.getElementById(v.getclicked).parentNode.offsetTop +"px)";
 		document.getElementById(k).style.width  = document.getElementById(corner_size).clientWidth + "px";
 		let event_tmp = document.getElementById(k);
 		//might do dynamic resizing here
+		event_tmp.style.display = "block";
+		event_tmp.style.alignItems = "stretch";
+		event_tmp.style.justifyContent = "stretch";
+		event_tmp.innerHTML = `
+			<button id="d${k}" class="eventDelete" type="button"></button>
+			<h5 style="color: white; word-wrap: break-word; margin-bottom: 0px; font-size: 1.3vw;">${v.title}</h5>
+			<p style="color: white; word-wrap: break-word; margin-bottom: 4px; font-size: 0.7vw;">(${v.start} - ${v.end})</p>
+			<div style="border-bottom: 1px solid white; margin-bottom: 2px;"></div>
+			<p style="color: white; word-wrap: break-word; font-size: 0.9vw;">${v.description}</p>
+		`;
 		if (document.getElementById(k).clientHeight < document.getElementById(k).scrollHeight) {
 			console.log("we have an overflow");
 			event_tmp.style.display = "flex";
@@ -313,17 +323,6 @@ window.addEventListener('resize', function () {
 			event_tmp.innerHTML = `
 			<button id="d${k}" class="eventDelete" type="button"></button>
 			<h5 style="color: white; word-wrap: break-word; margin-bottom: 0px; font-size: 1.3vw;">HOVER ME!</h5>`;
-		} else if (document.getElementById(k).clientHeight > document.getElementById(k).scrollHeight) {
-			event_tmp.style.display = "block";
-			event_tmp.style.alignItems = "stretch";
-			event_tmp.style.justifyContent = "stretch";
-			event_tmp.innerHTML = `
-				<button id="d${k}" class="eventDelete" type="button"></button>
-				<h5 style="color: white; word-wrap: break-word; margin-bottom: 0px; font-size: 1.3vw;">${v.title}</h5>
-				<p style="color: white; word-wrap: break-word; margin-bottom: 4px; font-size: 0.7vw;">(${v.start} - ${v.end})</p>
-				<div style="border-bottom: 1px solid white; margin-bottom: 2px;"></div>
-				<p style="color: white; word-wrap: break-word; font-size: 0.9vw;">${v.description}</p>
-			`;
 		}
 		var popover = bootstrap.Popover.getInstance(document.getElementById(k));
 
