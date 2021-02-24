@@ -110,7 +110,6 @@ function initcells() {
 			gridDrag = false;
 			clickdown = false;
 			curclickend = this.id;
-			console.log(this);
 			// we create a popup modal here
 			let modal = new bootstrap.Modal(document.getElementById('timeModal'), {
 			});
@@ -137,6 +136,17 @@ document.getElementById("gridting").addEventListener("mousemove", function (even
 var timemodal = document.getElementById('timeModal')
 timemodal.addEventListener('show.bs.modal', function (event) {
 	var reset = timemodal.querySelectorAll('.form-check-input');
+
+	const invalidMsges = document.getElementsByClassName("alert alert-warning alert-dismissible fade show");
+	console.log("hello", invalidMsges);
+	if (invalidMsges.length > 0) {
+		console.log(invalidMsges.length);
+		for (let i=invalidMsges.length-1; i>=0; i--) {
+			console.log(i)
+			invalidMsges[i].remove();
+		}
+	}
+
 	for (var i=0; i<reset.length; i++) {
 		reset[i].checked = false;
 	}
