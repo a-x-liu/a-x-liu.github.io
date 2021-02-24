@@ -141,42 +141,35 @@ timemodal.addEventListener('show.bs.modal', function (event) {
 		reset[i].checked = false;
 	}
 	timemodal.querySelector("#eventtitlemodal").value = "";
-	timemodal.querySelector("#eventtypemodal").value = "";
+	//timemodal.querySelector("#eventtypemodal").value = ""; Event type feature implement later
 	timemodal.querySelector("#eventdesmodal").value = "";
-
+	
 	getcurday = curclick[0];
+	const header = document.getElementById("timeModalLabel");
 	if (getcurday == 1) {
-		timemodal.querySelector('#rMon').checked = true;
+		header.innerHTML = "Create a new Monday event";
 	} else if (getcurday == 2) {
-		timemodal.querySelector('#rTue').checked = true;
+		header.innerHTML = "Ceate a new Tuesday event";
 	} else if (getcurday == 3) {
-		timemodal.querySelector('#rWed').checked = true;
+		header.innerHTML = "Create a new Wednesday event";
 	} else if (getcurday == 4) {
-		timemodal.querySelector('#rThu').checked = true;
+		header.innerHTML = "Create a new Thursday event";
 	} else if (getcurday == 5) {
-		timemodal.querySelector('#rFri').checked = true;
+		header.innerHTML = "Create a new Friday event";
 	} else if (getcurday == 6) {
-		timemodal.querySelector('#rSat').checked = true;
+		header.innerHTML = "Create a new Saturday event";
 	} else {
-		timemodal.querySelector('#rSun').checked = true;
+		header.innerHTML = "Create a new Sunday event";
 	}
 
 	let start = timemodal.querySelectorAll('.modalstart');
 	start[0].innerHTML = convertidtoTime(curclick) + ":00" + curclick[curclick.length-2] + curclick[curclick.length-1];
-	start[1].innerHTML = convertidtoTime(curclick) + ":15" + curclick[curclick.length-2] + curclick[curclick.length-1];
-	start[2].innerHTML = convertidtoTime(curclick) + ":30" + curclick[curclick.length-2] + curclick[curclick.length-1];
-	start[3].innerHTML = convertidtoTime(curclick) + ":45" + curclick[curclick.length-2] + curclick[curclick.length-1];
-	start[4].innerHTML = parseInt(convertidtoTime(curclick))+1 + ":00" + curclick[curclick.length-2] + curclick[curclick.length-1];
 
-	start = timemodal.querySelectorAll('.modalend');
-	start[0].innerHTML = parseInt(convertidtoTime(curclickend))+1 + ":00" + curclickend[curclickend.length-2] + curclickend[curclickend.length-1];
-	start[1].innerHTML = convertidtoTime(curclickend) + ":45" + curclickend[curclickend.length-2] + curclickend[curclickend.length-1];
-	start[2].innerHTML = convertidtoTime(curclickend) + ":30" + curclickend[curclickend.length-2] + curclickend[curclickend.length-1];
-	start[3].innerHTML = convertidtoTime(curclickend) + ":15" + curclickend[curclickend.length-2] + curclickend[curclickend.length-1];
-	start[4].innerHTML = convertidtoTime(curclickend) + ":00" + curclickend[curclickend.length-2] + curclickend[curclickend.length-1];
+	let end = timemodal.querySelectorAll('.modalend');
+	end[0].innerHTML = parseInt(convertidtoTime(curclickend))+1 + ":00" + curclickend[curclickend.length-2] + curclickend[curclickend.length-1];
 });
 
-// function to create the event once button is clicked -> add checker to make sure information is passed
+// function to change start and end time once button is clicked -> add checker to make sure information is passed
 var y = document.getElementById("dick");
 y.onclick = function () {
 	var start = parseInt(document.getElementById("start").value);
@@ -255,11 +248,13 @@ y.onclick = function () {
 	$('#exampleModal').modal('hide');
 }
 
+// to create a new event
 var eventbutton = document.getElementById("neweventbutton");
 eventbutton.onclick = function () {
 	let newevent = document.getElementById('timemodal');
 	let title = document.getElementById('eventtitlemodal').value;
-	let type = document.getElementById('eventtypemodal').value;
+	//let type = document.getElementById('eventtypemodal').value;
+	let type = "unknown";
 	let des = document.getElementById('eventdesmodal').value;
 	//need to do check her to make sure that start is before end
 	let start = document.getElementById("curstime").value;
@@ -291,9 +286,14 @@ eventbutton.onclick = function () {
 		document.getElementById("timeModal").childNodes[1].childNodes[1].appendChild(createAlert(msg));
 		return;
 	}
-
+	
+	if (getSelectedColor() == "invalid") {
+		let msg = `Invalid Input: Please select a colour.`;
+		document.getElementById("timeModal").childNodes[1].childNodes[1].appendChild(createAlert(msg));
+		return;
+	}
 	cur_id = createEvent(title, type, des, start, end, curclick);
-	var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, curclick);
+	var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, curclick, getSelectedColor());
 	createPopover(event_tmp, cur_id);
 	$('#timeModal').modal('hide');
 }
@@ -361,7 +361,7 @@ curclick = clicked;
 cur_id = createEvent(title, type, des, start, end, clicked);
 var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, clicked);
 createPopover(event_tmp, cur_id);
-document.getElementById(cur_id).style.backgroundColor = "red";
+document.getElementById(cur_id).style.backgroundColor = "#DC3545FF";
 
 title = "Welcome!";
 des = "Hello, this a simple website that allows you to create a weekly timetable to help you keep track of your routine.";
@@ -372,7 +372,7 @@ curclick = clicked;
 cur_id = createEvent(title, type, des, start, end, clicked);
 var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, clicked);
 createPopover(event_tmp, cur_id);
-document.getElementById(cur_id).style.backgroundColor = "dodgerBlue";
+document.getElementById(cur_id).style.backgroundColor = "#0D6EFDFF";
 
 title = "Reset Button"
 des = "The button above when clicked will delete all events in the current grid. Click it to get started!!!"
@@ -383,7 +383,7 @@ curclick = clicked;
 cur_id = createEvent(title, type, des, start, end, clicked);
 var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, clicked);
 createPopover(event_tmp, cur_id);
-document.getElementById(cur_id).style.backgroundColor = "darkViolet";
+document.getElementById(cur_id).style.backgroundColor = "#6610F2FF";
 
 title = "Clock Button"
 des = "Use this button to change the start and end times, it will dynamically resize and delete events."
@@ -394,7 +394,7 @@ curclick = clicked;
 cur_id = createEvent(title, type, des, start, end, clicked);
 var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, clicked);
 createPopover(event_tmp, cur_id);
-document.getElementById(cur_id).style.backgroundColor = "darkViolet";
+document.getElementById(cur_id).style.backgroundColor = "#6610F2FF";
 
 title = "Dynamic Sizing"
 des = "When event information cannot fit inside the allocated space the information will look like this."
@@ -405,7 +405,7 @@ curclick = clicked;
 cur_id = createEvent(title, type, des, start, end, clicked);
 var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, clicked);
 createPopover(event_tmp, cur_id);
-document.getElementById(cur_id).style.backgroundColor = "#088400";
+document.getElementById(cur_id).style.backgroundColor = "#198754FF";
 
 title = "Instructions"
 des = "Click and drag and then release within the grid to create a new event. Then enter some information and watch the information appear."
@@ -416,7 +416,7 @@ curclick = clicked;
 cur_id = createEvent(title, type, des, start, end, clicked);
 var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, clicked);
 createPopover(event_tmp, cur_id);
-document.getElementById(cur_id).style.backgroundColor = "Orange";
+document.getElementById(cur_id).style.backgroundColor = "#FD7E14FF";
 
 title = "Gym & Lunch"
 des = "Gym with an instructor. Remember to bring towel and water!"
@@ -427,7 +427,7 @@ curclick = clicked;
 cur_id = createEvent(title, type, des, start, end, clicked);
 var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, clicked);
 createPopover(event_tmp, cur_id);
-document.getElementById(cur_id).style.backgroundColor = "red";
+document.getElementById(cur_id).style.backgroundColor = "#DC3545FF";
 
 title = "More Features"
 des = "More features and updates will be coming!!"
@@ -438,7 +438,7 @@ curclick = clicked;
 cur_id = createEvent(title, type, des, start, end, clicked);
 var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, clicked);
 createPopover(event_tmp, cur_id);
-document.getElementById(cur_id).style.backgroundColor = "red";
+document.getElementById(cur_id).style.backgroundColor = "#DC3545FF";
 
 title = "Link"
 des = "Link to repository: https://github.com/a-x-liu/a-x-liu.github.io"
@@ -449,7 +449,7 @@ curclick = clicked;
 cur_id = createEvent(title, type, des, start, end, clicked);
 var event_tmp = createEventObject(cur_id, des, title, start, end, corner_size, clicked);
 createPopover(event_tmp, cur_id);
-document.getElementById(cur_id).style.backgroundColor = "dodgerblue";
+document.getElementById(cur_id).style.backgroundColor = "#0D6EFDFF";
 
 /*for (let[k,v] of eventData) {
 	console.log(k,v);

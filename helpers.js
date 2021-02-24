@@ -150,7 +150,17 @@ function switchEventDisplay(event_tmp, cur_id) {
     <h5 style="color: white; word-wrap: break-word; margin-bottom: 0px; font-size: 1.3vw;">HOVER ME!</h5>`;
 }
 
-function createEventObject (cur_id, des, title, start, end, corner_size, clicked) {
+function getSelectedColor () {
+    const colors = document.getElementsByName("colors");
+    for (let i=0; i<colors.length; i++) {
+        if (colors[i].checked == true) {
+            return colors[i].value;
+        }
+    }
+    return "invalid";
+}
+
+function createEventObject (cur_id, des, title, start, end, corner_size, clicked, color) {
     let num = timetonum(end) - timetonum(start);
     let event_tmp = document.createElement("div");
     event_tmp.id = cur_id;
@@ -166,7 +176,8 @@ function createEventObject (cur_id, des, title, start, end, corner_size, clicked
 	`;
 
     document.getElementsByClassName("container2")[0].append(event_tmp);
-	document.getElementById(cur_id).style.backgroundColor = document.getElementById("colorpicker").value;
+	document.getElementById(cur_id).style.backgroundColor = color;
+
     updateEventLocation(cur_id, corner_size, start, end, clicked);
     
     if (event_tmp.clientHeight < event_tmp.scrollHeight) {

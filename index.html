@@ -16,11 +16,11 @@
 	</head>
 	<body>
 		<!-- Modal for info button -->
-		<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-scrollable">
 			  <div class="modal-content">
 				<div class="modal-header">
-				  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+				  <h5 class="modal-title" id="infoModalLabel">Modal title</h5>
 				  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
@@ -128,76 +128,133 @@
 		<!--  -->
 
 		<!-- modal for creating events -->
-		<div class="modal fade" id="timeModal" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+		<div class="modal fade" id="timeModal" tabindex="-1" aria-labelledby="timeModalLabel2" aria-hidden="true">
 		  <div class="modal-dialog modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 			  <div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Create a new event</h5>
+				<h5 class="modal-title" id="timeModalLabel">Create a new event</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			  </div>
 			  <div class="modal-body">
 					<label for="recipient-name" class="col-form-label">Title:</label>
 					<input id="eventtitlemodal" type="text" class="form-control" id="title-name">
 
-					<label for="recipient-name" class="col-form-label">Type:</label>
-					<input id="eventtypemodal" type="text" class="form-control" id="type-name">
+					<label for="colorpicker" class="col-form-label">Select a Colour: </label>
 
-					<input type="color" id="colorpicker" value="#0000ff">
-
-					<label for="repeatids">Repeat:</label>
-					<div id="repeatids">
+					<div id="colorpicker" title="Choose your color">
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="checkbox" id="rMon" value="1">
-							<label class="form-check-label" for="inlineCheckbox1">M</label>
+							<input class="form-check-input form-check-inline" style= "background-color: #0D6EFDFF" type="radio" name="colors" id="color1" value="#0D6EFDFF" aria-label="...">
 						</div>
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="checkbox" id="rTue" value="2">
-							<label class="form-check-label" for="inlineCheckbox2">Tu</label>
+							<input class="form-check-input form-check-inline" style= "background-color: #6610F2FF" type="radio" name="colors" id="color2" value="#6610F2FF" aria-label="...">
 						</div>
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="checkbox" id="rWed" value="3">
-							<label class="form-check-label" for="inlineCheckbox2">W</label>
+							<input class="form-check-input form-check-inline" style= "background-color: #6F42C1FF" type="radio" name="colors" id="color3" value="#6F42C1FF" aria-label="...">
 						</div>
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="checkbox" id="rThu" value="4">
-							<label class="form-check-label" for="inlineCheckbox2">Th</label>
+							<input class="form-check-input form-check-inline" style= "background-color: #B23CFDFF" type="radio" name="colors" id="color4" value="#B23CFDFF" aria-label="...">
 						</div>
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="checkbox" id="rFri" value="5">
-							<label class="form-check-label" for="inlineCheckbox2">F</label>
+							<input class="form-check-input form-check-inline" style= "background-color: #D63384FF" type="radio" name="colors" id="color5" value="#D63384FF" aria-label="...">
 						</div>
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="checkbox" id="rSat" value="6">
-							<label class="form-check-label" for="inlineCheckbox2">S</label>
+							<input class="form-check-input form-check-inline" style= "background-color: #DC3545FF" type="radio" name="colors" id="color6" value="#DC3545FF" aria-label="...">
 						</div>
 						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="checkbox" id="rSun" value="7">
-							<label class="form-check-label" for="inlineCheckbox3">Su</label>
-						</div>	
+							<input class="form-check-input form-check-inline" style= "background-color: #FD7E14FF" type="radio" name="colors" id="color7" value="#FD7E14FF" aria-label="...">
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input form-check-inline" style= "background-color: #FFC107FF" type="radio" name="colors" id="color8" value="#FFC107FF" aria-label="...">
+						</div>
+						<div></div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input form-check-inline" style= "background-color: #198754FF" type="radio" name="colors" id="color9" value="#198754FF" aria-label="...">
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input form-check-inline" style= "background-color: #20C997FF" type="radio" name="colors" id="color10" value="#20C997FF" aria-label="...">
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input form-check-inline" style= "background-color: #0DCAF0FF" type="radio" name="colors" id="color11" value="#0DCAF0FF" aria-label="...">
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input form-check-inline" style= "background-color: #39C0EDFF" type="radio" name="colors" id="color12" value="#39C0EDFF" aria-label="...">
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input form-check-inline" style= "background-color: #757575FF" type="radio" name="colors" id="color13" value="#757575FF" aria-label="...">
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input form-check-inline" style= "background-color: #4F4F4FFF" type="radio" name="colors" id="color14" value="#4F4F4FFF" aria-label="...">
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input form-check-inline" style= "background-color: #262626FF" type="radio" name="colors" id="color15" value="#262626FF" aria-label="...">
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input form-check-inline" style= "background-color: #000000FF" type="radio" name="colors" id="color16" value="#000000FF" aria-label="...">
+						</div>
 					</div>
-
+						
 					<label for="curstime" class="col-form-label">Start:</label>
 					<select class="form-select" aria-label="Default select example" id="curstime"> 
 						<option class="modalstart" selected>Open this select menu</option>
-						<option class="modalstart" value="1">One</option>
-						<option class="modalstart" value="2">Two</option>
-						<option class="modalstart" value="3">Three</option>
-						<option class="modalstart" value="3">Three</option>
+						<option value="1:00am">1:00am</option>
+						<option value="2:00am">2:00am</option>
+						<option value="3:00am">3:00am</option>
+						<option value="4:00am">4:00am</option>
+						<option value="5:00am">5:00am</option>
+						<option value="6:00am">6:00am</option>
+						<option value="7:00am">7:00am</option>
+						<option value="8:00am">8:00am</option>
+						<option value="9:00am">9:00am</option>
+						<option value="10:00am">10:00am</option>
+						<option value="11:00am">11:00am</option>
+						<option value="12:00am">12:00am</option>
+						<option value="1:00pm">1:00pm</option>
+						<option value="2:00pm">2:00pm</option>
+						<option value="3:00pm">3:00pm</option>
+						<option value="4:00pm">4:00pm</option>
+						<option value="5:00pm">5:00pm</option>
+						<option value="6:00pm">6:00pm</option>
+						<option value="7:00pm">7:00pm</option>
+						<option value="8:00pm">8:00pm</option>
+						<option value="9:00pm">9:00pm</option>
+						<option value="10:00pm">10:00pm</option>
+						<option value="11:00pm">11:00pm</option>
+						<option value="12:00pm">12:00pm</option>
 					</select>
 
-				  <label for="curetime" class="col-form-label">End:</label>
-				  <select class="form-select" aria-label="Default select example" id="curetime">
-					<option class="modalend" selected>Open this select menu</option>
-					<option class="modalend" value="1">One</option>
-					<option class="modalend" value="2">Two</option>
-					<option class="modalend" value="3">Three</option>
-					<option class="modalend" value="3">Three</option>
-				  </select>
+					<label for="curetime" class="col-form-label">End:</label>
+					<select class="form-select" aria-label="Default select example" id="curetime">
+						<option class="modalend" selected>Open this select menu</option>
+						<option value="1:00am">1:00am</option>
+						<option value="2:00am">2:00am</option>
+						<option value="3:00am">3:00am</option>
+						<option value="4:00am">4:00am</option>
+						<option value="5:00am">5:00am</option>
+						<option value="6:00am">6:00am</option>
+						<option value="7:00am">7:00am</option>
+						<option value="8:00am">8:00am</option>
+						<option value="9:00am">9:00am</option>
+						<option value="10:00am">10:00am</option>
+						<option value="11:00am">11:00am</option>
+						<option value="12:00am">12:00am</option>
+						<option value="1:00pm">1:00pm</option>
+						<option value="2:00pm">2:00pm</option>
+						<option value="3:00pm">3:00pm</option>
+						<option value="4:00pm">4:00pm</option>
+						<option value="5:00pm">5:00pm</option>
+						<option value="6:00pm">6:00pm</option>
+						<option value="7:00pm">7:00pm</option>
+						<option value="8:00pm">8:00pm</option>
+						<option value="9:00pm">9:00pm</option>
+						<option value="10:00pm">10:00pm</option>
+						<option value="11:00pm">11:00pm</option>
+						<option value="12:00pm">12:00pm</option>
+					</select>
 
-				  <div class="mb-3">
-					<label for="message-text" class="col-form-label">Description:</label>
-					<textarea id="eventdesmodal" class="form-control" id="message-text"></textarea>
-				  </div>
+					<div class="mb-3">
+						<label for="message-text" class="col-form-label">Description:</label>
+						<textarea id="eventdesmodal" class="form-control" id="message-text"></textarea>
+					</div>
 			  </div>
 			  <div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
