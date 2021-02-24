@@ -16,3 +16,4 @@ Other updates in the works...
 
 Known Bugs:
 - on windows when cancelling a new event click and drag from certain cells stop working, will fix itself after click and dragging other boxes and exiting them (not sure what is happening here)
+- when changing start and end time -> big changes will make events slightly out of position in grid -> currently resizing the window seems to snap them back perfectly
