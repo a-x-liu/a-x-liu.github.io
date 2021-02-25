@@ -9,7 +9,6 @@ let daysTemplate = `<div class="row2">
                         <!-- <a tabindex="0" id="dick" class="btn btn-outline-secondary" role="button" data-bs-toggle="popover" data-bs-placement="right" title="Dismissible popover" data-bs-html="true" sanitize="false" data-bs-content='
                         <h1>hello there</h1>
                         <div class="mb-3">
-                            yoooooo nigella
                             <label for="exampleFormControlInput1" class="form-label">Email address</label>
                             <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
                         </div>
@@ -125,8 +124,8 @@ function valuetoCellID(num) {
 
 function updateEventLocation(id, corner_size, start, end, clicked) {
     //console.log(clicked, start, end);
-    document.getElementById(id).style.width = document.getElementById(corner_size).clientWidth + "px";
-    document.getElementById(id).style.height = (document.getElementById(corner_size).clientHeight * (timetonum(end) - timetonum(start))) + "px";
+    document.getElementById(id).style.width = document.getElementById(corner_size).clientWidth + 1 + "px";
+    document.getElementById(id).style.height = (document.getElementById(corner_size).clientHeight * (timetonum(end) - timetonum(start))) + (timetonum(end) - timetonum(start)-1) + "px";
     document.getElementById(id).style.transform = "translate(" + document.getElementById(clicked).offsetLeft + "px," + document.getElementById(clicked).parentNode.offsetTop +"px)";
     if (document.getElementById(id).clientHeight < document.getElementById(id).scrollHeight) {
         switchEventDisplay(document.getElementById(id), id);
