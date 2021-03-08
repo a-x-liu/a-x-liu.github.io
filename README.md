@@ -1,11 +1,11 @@
 # timetabling.github.io
 Features that are currently being worked on (ordered by urgency):
-- improve the new event modal:
+DONE - improve the new event modal:
    - add a better color selector -> switch from type to colour selecter
    - add must have astriesks for fields that must be filled
-- Overall better style of the page -> reduce white space
-- better style for the popovers
+DONE - Overall better style of the page -> reduce white space
 Basic page design and functionality will finish by this point
+- better style for the popovers
 -------------------------------------------
 Extensions:
 - allowing for more start and end times:
