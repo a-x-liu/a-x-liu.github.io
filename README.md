@@ -4,6 +4,7 @@ Features that are currently being worked on (ordered by urgency):
    - add a better color selector -> switch from type to colour selecter (DONE)
    - add must have astriesks for fields that must be filled (DONE)
 - Overall better style of the page -> reduce white space (DONE)
+
 Basic page design and functionality will finish by this point
 - better style for the popovers
 -------------------------------------------
