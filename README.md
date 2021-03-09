@@ -7,6 +7,12 @@ DONE - Overall better style of the page -> reduce white space
 Basic page design and functionality will finish by this point
 - better style for the popovers
 -------------------------------------------
+REFACTOR CODE 
+- fix up the file sttructure 
+- update to react -> so don't have to deal with updating data and dom
+                  -> update to declarative programming
+- maybe update to mysql backend
+-------------------------------------------
 Extensions:
 - allowing for more start and end times:
    - timetabling after midnight (e.g 8pm - 2am)
